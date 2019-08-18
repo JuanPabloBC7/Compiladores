@@ -1,0 +1,44 @@
+Select	 Linea 0	 Columnas: 0-6   	 es IDENTIFICADOR
+
+SELECT	 Linea 1	 Columnas: 0-6   	 es PALABRA_RESERVADA
+
+seLect	 Linea 2	 Columnas: 0-6   	 es IDENTIFICADOR
+
+/	 Linea 3	 Columnas: 0-1   	 es OPERADOR
+
+*	 Linea 4	 Columnas: 0-1   	 es OPERADOR
+
++	 Linea 5	 Columnas: 0-1   	 es OPERADOR
+
+-	 Linea 6	 Columnas: 0-1   	 es OPERADOR
+
+>	 Linea 7	 Columnas: 0-1   	 es OPERADOR
+
+<	 Linea 7	 Columnas: 1-2   	 es OPERADOR
+
+<	 Linea 8	 Columnas: 0-1   	 es OPERADOR
+
+>	 Linea 9	 Columnas: 0-1   	 es OPERADOR
+
++	 Linea 9	 Columnas: 1-2   	 es OPERADOR
+
+=	 Linea 9	 Columnas: 2-3   	 es OPERADOR
+
+<=	 Linea 9	 Columnas: 3-5   	 es OPERADOR
+
+EXIT	 Linea 9	 Columnas: 5-9   	 es PALABRA_RESERVADA
+
+hola	 Linea 9	 Columnas: 10-14   	 es IDENTIFICADOR
+
+EXIT	 Linea 9	 Columnas: 15-19   	 es PALABRA_RESERVADA
+
+EXIT	 Linea 10	 Columnas: 0-4   	 es PALABRA_RESERVADA
+
+FOR	 Linea 11	 Columnas: 0-3   	 es PALABRA_RESERVADA
+
+EXIT	 Linea 11	 Columnas: 4-8   	 es PALABRA_RESERVADA
+
+FOR	 Linea 12	 Columnas: 0-3   	 es PALABRA_RESERVADA
+
+For	 Linea 12	 Columnas: 4-7   	 es IDENTIFICADOR
+
