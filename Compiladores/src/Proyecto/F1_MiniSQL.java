@@ -41,7 +41,7 @@ class F1_MiniSQL {
     "\1\15\1\3\1\7\1\6\1\21\1\25\1\32\1\16\1\20\1\56"+
     "\1\0\1\57\1\0\1\26\1\0\4\36\1\42\25\36\1\62\1\47"+
     "\1\63\7\0\1\65\33\0\1\0\6\0\1\0\13\0\1\0\12\0"+
-    "\1\0\u1f68\0\1\65\1\65\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\udfe6\0";
+    "\1\0\2\0\1\0\u1f65\0\1\65\1\65\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\udfe6\0";
 
   /** 
    * Translates characters to character classes
@@ -1181,7 +1181,7 @@ class F1_MiniSQL {
     char [] map = new char[0x110000];
     int i = 0;  /* index in packed string  */
     int j = 0;  /* index in unpacked array */
-    while (i < 202) {
+    while (i < 206) {
       int  count = packed.charAt(i++);
       char value = packed.charAt(i++);
       do map[j++] = value; while (--count > 0);
