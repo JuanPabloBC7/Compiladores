@@ -24,6 +24,11 @@ import javax.swing.JOptionPane;
  */
 public class Methods {
     ArrayList<String> Lista = new ArrayList<>();
+    DefaultListModel Object = new DefaultListModel();
+    DefaultListModel Column = new DefaultListModel();
+    DefaultListModel Line = new DefaultListModel();
+    DefaultListModel TokenType = new DefaultListModel();
+    DefaultListModel Value = new DefaultListModel();
     
     public void F1_AnalizadorLexico(File Path) throws FileNotFoundException, IOException{
         File Archivo = new File("Archivo.txt");
@@ -106,8 +111,8 @@ public class Methods {
             switch(T)
             {
                 case ERROR:                                      //----------------------------------------
-                    TODO.addElement("\n*** " + T + " LINE " + SQL.Lineas(Read) + ". *** Unrecognized Char: '" + SQL.Texto + "'\n\n");
-                    TODO2 += "\n*** " + T + " LINE " + SQL.Lineas(Read) + ". *** Unrecognized Char: '" + SQL.Texto + "'\n\n";
+                    TODO.addElement("*** " + T + " LINE " + SQL.Lineas(Read) + ". *** Unrecognized Character: " + SQL.Texto + "\n\n");
+                    TODO2 += "*** " + T + " LINE " + SQL.Lineas(Read) + ". *** Unrecognized Character: " + SQL.Texto + "\n";
                     
                     break;
                 /*case OPERADOR:
@@ -117,13 +122,18 @@ public class Methods {
                 case IDENTIFICADOR:
                     if (SQL.Texto.length() > 31)
                     {
-                        TODO.addElement("\n*** ERROR LINE " + SQL.Lineas(Read) + ". *** Char: '" + SQL.Texto.substring(0,31) + "'\n\n");
-                        TODO2 += "\n*** ERROR LINE " + SQL.Lineas(Read) + ". *** Char: '" + SQL.Texto.substring(0,31) + "'\n\n";
+                        TODO.addElement("\n*** ERROR LINE " + SQL.Lineas(Read) + ". *** Truncated idntifier: \t" + SQL.Texto.substring(0,31) + "\n\n");
+                        TODO2 += "*** ERROR LINE " + SQL.Lineas(Read) + ". *** Truncated idntifier: \t" + SQL.Texto.substring(0,31) + "\n";
                     }
                     else
                     {
-                        TODO.addElement(SQL.Texto + "\t Linea " + SQL.Lineas(Read) + "\t Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + "   \t es " + T + "\n");
-                        TODO2 += SQL.Texto + "\t Linea " + SQL.Lineas(Read) + "\t Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length())  + "   \t es " + T + "\n";
+                        Object.addElement(" " + SQL.Texto);
+                        Column.addElement("" + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()));
+                        Line.addElement("" + SQL.Lineas(Read));
+                        TokenType.addElement("" + T);
+                        Value.addElement("");
+                        TODO.addElement("Linea " + SQL.Lineas(Read) + " Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + "     \t " + SQL.Texto + "          \t es " + T + "\n");
+                        //TODO2 += "Linea " + SQL.Lineas(Read) + " Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + "     \t " + SQL.Texto + "          \t es " + T + "\n";
                     }
                     break;
                 
@@ -131,13 +141,23 @@ public class Methods {
                     //if(T == T.IDENTIFICADOR && Tamaño > 31)
                     if(T == T.BOOLEANO || T == T.ENTERO || T == T.DECIMAL || T == T.CADENA)
                     {
-                        TODO.addElement(SQL.Texto + "\t Linea " + SQL.Lineas(Read) + "\t Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + "   \t es " + T + " (value = " + SQL.Texto + ")\n");
-                        TODO2 += SQL.Texto + "\t Linea " + SQL.Lineas(Read) + "\t Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length())  + "   \t es " + T + " (value = " + SQL.Texto + ")\n";
+                        Object.addElement(" " + SQL.Texto);
+                        Column.addElement("" + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()));
+                        Line.addElement("" + SQL.Lineas(Read));
+                        TokenType.addElement("" + T);
+                        Value.addElement("" + SQL.Texto);
+                        TODO.addElement("Linea " + SQL.Lineas(Read) + " Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + "     \t " + SQL.Texto + "          \t es " + T + " (value = " + SQL.Texto + ")\n");
+                        //TODO2 += "Linea " + SQL.Lineas(Read) + " Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length())  + "     \t " + SQL.Texto + "          \t es " + T + " (value = " + SQL.Texto + ")\n";
                     }
                     else
                     {
-                        TODO.addElement(SQL.Texto + "\t Linea " + SQL.Lineas(Read) + "\t Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + "   \t es " + T + "\n");
-                        TODO2 += SQL.Texto + "\t Linea " + SQL.Lineas(Read) + "\t Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length())  + "   \t es " + T + "\n";
+                        Object.addElement(" " + SQL.Texto);
+                        Column.addElement("" + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()));
+                        Line.addElement("" + SQL.Lineas(Read));
+                        TokenType.addElement("" + T);
+                        Value.addElement("");
+                        TODO.addElement("Linea " + SQL.Lineas(Read) + " Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + "     \t " + SQL.Texto + "          \t es " + T + "\n");
+                        //TODO2 += "Linea " + SQL.Lineas(Read) + " Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + "     \t " + SQL.Texto + "          \t es " + T + "\n";
                     }
             }
         }

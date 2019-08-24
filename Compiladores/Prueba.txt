@@ -1,4 +1,21 @@
-=EXITholaEXIT
-EXIT
-FOREXIT
-FORFor
+
+1
+0
+NULL
+'hola mundo'
+
+ 12.E+2
+
+12.2E+2
+
+	12E+2
+
+
+12. y 0.12 
+
+.12 --No es valida
+
+ .12E+2 --No es valida
+
+
+

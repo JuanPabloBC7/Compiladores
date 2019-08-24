@@ -13,14 +13,12 @@ public enum Token {
     ERROR,
     
     PALABRA_RESERVADA,
-    
     BOOLEANO,
     ENTERO,
     HEXADECIMAL,
     DECIMAL,
     CADENA,
     OPERADOR,
-    
     IDENTIFICADOR,
         
     PUNTO

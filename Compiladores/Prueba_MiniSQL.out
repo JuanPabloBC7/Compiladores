@@ -1,44 +1,40 @@
-Select	 Linea 0	 Columnas: 0-6   	 es IDENTIFICADOR
+Linea 1 Columnas: 0-1     	 1          	 es BOOLEANO (value = 1)
 
-SELECT	 Linea 1	 Columnas: 0-6   	 es PALABRA_RESERVADA
+Linea 2 Columnas: 0-1     	 0          	 es BOOLEANO (value = 0)
 
-seLect	 Linea 2	 Columnas: 0-6   	 es IDENTIFICADOR
+Linea 3 Columnas: 0-4     	 NULL          	 es PALABRA_RESERVADA
 
-/	 Linea 3	 Columnas: 0-1   	 es OPERADOR
+Linea 4 Columnas: 0-12     	 'hola mundo'          	 es CADENA (value = 'hola mundo')
 
-*	 Linea 4	 Columnas: 0-1   	 es OPERADOR
+Linea 6 Columnas: 1-7     	 12.E+2          	 es DECIMAL (value = 12.E+2)
 
-+	 Linea 5	 Columnas: 0-1   	 es OPERADOR
+Linea 8 Columnas: 0-7     	 12.2E+2          	 es DECIMAL (value = 12.2E+2)
 
--	 Linea 6	 Columnas: 0-1   	 es OPERADOR
+Linea 10 Columnas: 1-3     	 12          	 es ENTERO (value = 12)
 
->	 Linea 7	 Columnas: 0-1   	 es OPERADOR
+Linea 10 Columnas: 3-4     	 E          	 es IDENTIFICADOR
 
-<	 Linea 7	 Columnas: 1-2   	 es OPERADOR
+Linea 10 Columnas: 4-5     	 +          	 es OPERADOR
 
-<	 Linea 8	 Columnas: 0-1   	 es OPERADOR
+Linea 10 Columnas: 5-6     	 2          	 es ENTERO (value = 2)
 
->	 Linea 9	 Columnas: 0-1   	 es OPERADOR
+Linea 13 Columnas: 0-3     	 12.          	 es DECIMAL (value = 12.)
 
-+	 Linea 9	 Columnas: 1-2   	 es OPERADOR
+Linea 13 Columnas: 4-5     	 y          	 es IDENTIFICADOR
 
-=	 Linea 9	 Columnas: 2-3   	 es OPERADOR
+Linea 13 Columnas: 6-10     	 0.12          	 es DECIMAL (value = 0.12)
 
-<=	 Linea 9	 Columnas: 3-5   	 es OPERADOR
+Linea 15 Columnas: 0-1     	 .          	 es OPERADOR
 
-EXIT	 Linea 9	 Columnas: 5-9   	 es PALABRA_RESERVADA
+Linea 15 Columnas: 1-3     	 12          	 es ENTERO (value = 12)
 
-hola	 Linea 9	 Columnas: 10-14   	 es IDENTIFICADOR
+Linea 17 Columnas: 1-2     	 .          	 es OPERADOR
 
-EXIT	 Linea 9	 Columnas: 15-19   	 es PALABRA_RESERVADA
+Linea 17 Columnas: 2-4     	 12          	 es ENTERO (value = 12)
 
-EXIT	 Linea 10	 Columnas: 0-4   	 es PALABRA_RESERVADA
+Linea 17 Columnas: 4-5     	 E          	 es IDENTIFICADOR
 
-FOR	 Linea 11	 Columnas: 0-3   	 es PALABRA_RESERVADA
+Linea 17 Columnas: 5-6     	 +          	 es OPERADOR
 
-EXIT	 Linea 11	 Columnas: 4-8   	 es PALABRA_RESERVADA
-
-FOR	 Linea 12	 Columnas: 0-3   	 es PALABRA_RESERVADA
-
-For	 Linea 12	 Columnas: 4-7   	 es IDENTIFICADOR
+Linea 17 Columnas: 6-7     	 2          	 es ENTERO (value = 2)
 
