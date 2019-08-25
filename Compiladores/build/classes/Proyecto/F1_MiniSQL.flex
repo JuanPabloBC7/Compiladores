@@ -35,7 +35,7 @@ C_Decimal   = [0-9]+ "." [0-9]*                                                 
 
 
 
-C_String    = (\')[^\n]*(\')                                                    //(\")[^\n]*(\")                                                    //ERROR_STRING    = \" (" "|\r|\t|{Identificadores}|{Abcedario}|{Digitos}|[A-Za-z]|{ASCII}|{Operadores}|\')* (\n) 
+C_String    = (\')[^\n\']*(\')                                                    //(\")[^\n]*(\")                                                    //ERROR_STRING    = \" (" "|\r|\t|{Identificadores}|{Abcedario}|{Digitos}|[A-Za-z]|{ASCII}|{Operadores}|\')* (\n) 
 
 //------------------------------------------------------------------------------
 //------------------------------------Otros-------------------------------------
@@ -47,7 +47,7 @@ ASCII = [A-Za-z _ . ! # $ % & = \? ¡ ¿ @ ´ ¨ \+ < > , - : ; \\ \* \/]
 
 Comentario   = "/*" [^]~ "*/"                                                   //Comentario   = "/*" ({Espacio} | [^.])* "*/"
 Comentario2 = "--" [^]~ "\n"                                                    //Comentario2 = "//" ([" "|\r|\t]* | [^.])* "\n"
-ERROR_COMENTARIO = "/*" [^*]+ 
+ERROR_COMENTARIO = "/*" [^ ] 
 //------------------------------------------------------------------------------
 //---------------------------------Operadores-----------------------------------
 //------------------------------------------------------------------------------
@@ -77,10 +77,12 @@ Operadores = \+ | - | \* | \/ | % | < | "<=" | > | ">=" | = | "==" | "!=" | "&&"
 "\n" {/*Ignore*/}
 "\r" {/*Ignore*/}
 //"//".* {/*Ignore*/}
-{ERROR_COMENTARIO}      {Texto = yytext(); return ERROR;}
-
 {Comentario} {/*Ignore*/}
 {Comentario2} {/*Ignore*/}
+
+{ERROR_COMENTARIO}      {Texto = yytext(); return ERROR_COMENTARIO;}
+
+
 //------------------------------------------------------------------------------
 //-----------------------------------Retornos-----------------------------------
 {P_Reservadas}    {Texto = yytext(); return PALABRA_RESERVADA;}

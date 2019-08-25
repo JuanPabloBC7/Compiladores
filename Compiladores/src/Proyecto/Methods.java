@@ -115,6 +115,10 @@ public class Methods {
                     TODO2 += "*** " + T + " LINE " + SQL.Lineas(Read) + ". *** Unrecognized Character: " + SQL.Texto + "\n";
                     
                     break;
+                case ERROR_COMENTARIO:
+                    TODO.addElement("*** ERROR LINE " + SQL.Lineas(Read) + ". *** Comment Error: " + SQL.Texto + "\n\n");
+                    TODO2 += "*** ERROR LINE " + SQL.Lineas(Read) + ". *** Comment Error: " + SQL.Texto + "\n";
+                    break;
                 /*case OPERADOR:
                     TODO.addElement(SQL.Texto + "\t Linea " + SQL.Lineas(Read) + "\t Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + " es '" + SQL.Texto + "'\n");
                     TODO2 += SQL.Texto + "\t Linea " + SQL.Lineas(Read) + "\t Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length())  + " es '" + SQL.Texto + "'\n";

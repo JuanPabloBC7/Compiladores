@@ -1,21 +1,13 @@
 
-1
-0
-NULL
-'hola mundo'
-
- 12.E+2
-
-12.2E+2
-
-	12E+2
-
-
-12. y 0.12 
+--Hola esto es un comentario 
+Hola_esto_no_es_comentario
+*/
 
 .12 --No es valida
 
  .12E+2 --No es valida
 
-
+select
+Select
+SELECT
 
