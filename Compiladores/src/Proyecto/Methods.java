@@ -111,13 +111,21 @@ public class Methods {
             switch(T)
             {
                 case ERROR:                                      //----------------------------------------
-                    TODO.addElement("*** " + T + " LINE " + SQL.Lineas(Read) + ". *** Unrecognized Character: " + SQL.Texto + "\n\n");
-                    TODO2 += "*** " + T + " LINE " + SQL.Lineas(Read) + ". *** Unrecognized Character: " + SQL.Texto + "\n";
+                    TODO.addElement("*** " + T + " LINE " + SQL.Lineas(Read) + ". *** Unrecognized Character: \t" + SQL.Texto + "\n\n");
+                    TODO2 += "*** " + T + " LINE " + SQL.Lineas(Read) + ". *** Unrecognized Character: \t" + SQL.Texto + "\n";
                     
                     break;
                 case ERROR_COMENTARIO:
-                    TODO.addElement("*** ERROR LINE " + SQL.Lineas(Read) + ". *** Comment Error: " + SQL.Texto + "\n\n");
-                    TODO2 += "*** ERROR LINE " + SQL.Lineas(Read) + ". *** Comment Error: " + SQL.Texto + "\n";
+                    TODO.addElement("*** ERROR LINE " + SQL.Lineas(Read) + ". *** Comment Error: \t" + SQL.Texto + "\n\n");
+                    TODO2 += "*** ERROR LINE " + SQL.Lineas(Read) + ". *** Comment Error: \ts" + SQL.Texto + "\n";
+                    break;
+                case ERROR_EXPONENTE:
+                    TODO.addElement("*** ERROR LINE " + SQL.Lineas(Read) + ". *** Exponent Error: \t\t" + SQL.Texto + "\n\n");
+                    TODO2 += "*** ERROR LINE " + SQL.Lineas(Read) + ". *** Exponent Error: \t\t" + SQL.Texto + "\n";
+                    break;
+                case ERROR_IDENTIFICADOR:
+                    TODO.addElement("*** ERROR LINE " + SQL.Lineas(Read) + ". *** Identifier Error: \t" + SQL.Texto + "\n\n");
+                    TODO2 += "*** ERROR LINE " + SQL.Lineas(Read) + ". *** Identifier Error: \t" + SQL.Texto + "\n";
                     break;
                 /*case OPERADOR:
                     TODO.addElement(SQL.Texto + "\t Linea " + SQL.Lineas(Read) + "\t Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + " es '" + SQL.Texto + "'\n");
