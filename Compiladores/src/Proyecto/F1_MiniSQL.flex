@@ -14,8 +14,8 @@ P_Reservadas= "ABSOLUTE" | "ACTION" | "ADA" | "ADD" | "ALL" | "ALLOCATE" | "ALTE
                 Mini-SQL distingue entre mayúsculas y minúsculas (case sensitive).
                         SELECT es una palabra clave pero select es un identificador
                         binky y Binky son dos identificadores distintos.*/
-Identificadores = [A-Za-z]([_]|[A-Za-z]|[0-9])*                                 
-ERROR_IDENTIFICADOR = (_)([_]|[0-9]|[A-Za-z])+
+Identificadores = [A-Za-z]([_]|[A-Za-z]|[0-9]|"ñ"|"Ñ")*                                 
+//ERROR_IDENTIFICADOR = (_)([_]|[0-9]|[A-Za-z])+
 
 /*---------------------------------Constantes---------------------------------------------------------------------------------------------------------------------------------------------
                 Las constantes booleanas son de tipo bit y pueden guardar valores: 0, 1 o NULL.
@@ -32,7 +32,6 @@ C_Booleanas = "0"|"1"|"NULL"
 C_Entera    = [0-9]+                                                            //C_Hexadecimal = 0[xX][0-9a-fA-F]+                                               //"."?[0-9a-fA-F]*
 C_Decimal   = [0-9]+ "." [0-9]*                                                 //| "." [0-9]+
             | [0-9]+ "." [0-9]* [eE] [\+|-]? [0-9]+ "."? [0-9]*                 //| "." [0-9]+ [eE] [\+|-]? [0-9]+                                    
-ERROR_EXPONENTE = [0-9]+"."[eE] | "."[0-9]+[eE] | "."[eE][0-9]+ | [0-9]+[eE]"." | [eE][0-9]+"." | [eE]"."[0-9]+ | [0-9]+"."[0-9]+[eE] | "."[0-9]+[eE][0-9]+"."[0-9]+ | [0-9]+[eE]"."[0-9]+ | "."[0-9]+[eE][0-9]+ | [eE][0-9]+"."[0-9]+ | "."[0-9]+[eE][0-9]+"."[0-9]+ | "."[0-9]+[eE][0-9]+"." | "."[0-9]+[eE]"."[0-9]+
 //ERROR_DOUBLE= "."[0-9]+ | "."[0-9]+[eE] | "."[0-9]+[eE][0-9]+        //ERROR_DOUBLE    = "."0[xX][0-9a-zA-Z]+ | "."0[0-9a-zA-Z]+[xX] | "."[0-9a-zA-Z]+0[xX] | "."[0-9a-zA-Z]+[xX]0 | "."[xX][0-9a-zA-Z]+0 | "."[xX]0[0-9a-zA-Z]+ | 0[xX][0-9a-zA-Z]+"." | 0[xX]"."[0-9a-zA-Z]+ | 0"."[xX][0-9a-zA-Z]+ | 0"."[0-9a-zA-Z]+[xX] | 0[0-9a-zA-Z]+"."[xX] | 0[0-9a-zA-Z]+[xX]"." | [xX]0"."[0-9a-zA-Z]+ | [xX]0[0-9a-zA-Z]+"." | [xX][0-9a-zA-Z]+0"." | [xX][0-9a-zA-Z]+"."0 | [xX]"."[0-9a-zA-Z]+0 | [xX]"."0[0-9a-zA-Z]+ | [0-9a-zA-Z]+"."0[xX] | [0-9a-zA-Z]+"."[xX]0 | [0-9a-zA-Z]+[xX]"."0 | [0-9a-zA-Z]+[xX]0"." | [0-9a-zA-Z]+0[xX]"." | [0-9a-zA-Z]+0"."[xX] | [0-9a-zA-Z]+"."[0-9a-zA-Z]+[xX] | [0-9a-zA-Z]+"."[xX][0-9a-zA-Z]+ | [0-9a-zA-Z]+[xX]"."[0-9a-zA-Z]+ | [1-9a-zA-Z]+[xX][0-9a-zA-Z]+"." | [0-9a-zA-Z]+[xX]"." | [0-9a-zA-Z]+"."[xX] | [xX][0-9a-zA-Z]+"."[0-9a-zA-Z]+ | [xX][0-9a-zA-Z]+"."[0-9a-zA-Z]+ | [xX][0-9a-zA-Z]+"." | "."[0-9a-zA-Z]+[xX][0-9a-zA-Z]+ | [0-9a-zA-Z]+"."[xX] | "."[0-9a-zA-Z]+[xX] | [xX]"."[0-9a-zA-Z]+ | [xX][0-9a-zA-Z]+"." | [0-9a-zA-Z]+[xX][0-9a-zA-Z]+"." | "."[xX][0-9a-zA-Z]+ | [0-9a-zA-Z]+"."[0-9a-zA-Z]+[xX] | "."[0-9a-zA-Z]+[xX] | [xX][0-9a-zA-Z]+"."[0-9a-zA-Z]+ | [xX]"."[0-9a-zA-Z]+ | [0-9a-zA-Z]+[xX]"."[0-9a-zA-Z]+ | "."[xX][0-9a-zA-Z]+ | [0-9a-zA-Z]+"."[xX][0-9a-zA-Z]+ | "."[0-9a-zA-Z]+[xX][0-9a-zA-Z]+
 
 
@@ -48,7 +47,7 @@ ASCII = [A-Za-z _ . ! # $ % & = \? ¡ ¿ @ ´ ¨ \+ < > , - : ; \\ \* \/]
 
 Comentario   = "/*" [^]~ "*/"                                                   //Comentario   = "/*" ({Espacio} | [^.])* "*/"
 Comentario2 = "--" [^]~ "\n"                                                    //Comentario2 = "//" ([" "|\r|\t]* | [^.])* "\n"
-ERROR_COMENTARIO = "/*"[^ ] 
+ERROR_COMENTARIO = "/*"[^\n] 
 //------------------------------------------------------------------------------
 //---------------------------------Operadores-----------------------------------
 //------------------------------------------------------------------------------
@@ -81,9 +80,8 @@ Operadores = \+ | - | \* | \/ | % | < | "<=" | > | ">=" | = | "==" | "!=" | "&&"
 {Comentario} {/*Ignore*/}
 {Comentario2} {/*Ignore*/}
 
+
 {ERROR_COMENTARIO} {Texto = yytext(); return ERROR_COMENTARIO;}
-{ERROR_EXPONENTE} {Texto = yytext(); return ERROR_EXPONENTE;}
-{ERROR_IDENTIFICADOR} {Texto = yytext(); return ERROR_IDENTIFICADOR;}
 
 
 //------------------------------------------------------------------------------

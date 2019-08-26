@@ -12,8 +12,6 @@ package Proyecto;
 public enum Token {
     ERROR,
     ERROR_COMENTARIO,
-    ERROR_EXPONENTE,
-    ERROR_IDENTIFICADOR,
     
     PALABRA_RESERVADA,
     BOOLEANO,

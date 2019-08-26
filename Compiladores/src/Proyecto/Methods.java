@@ -119,14 +119,6 @@ public class Methods {
                     TODO.addElement("*** ERROR LINE " + SQL.Lineas(Read) + ". *** Comment Error: \t" + SQL.Texto + "\n\n");
                     TODO2 += "*** ERROR LINE " + SQL.Lineas(Read) + ". *** Comment Error: \ts" + SQL.Texto + "\n";
                     break;
-                case ERROR_EXPONENTE:
-                    TODO.addElement("*** ERROR LINE " + SQL.Lineas(Read) + ". *** Exponent Error: \t\t" + SQL.Texto + "\n\n");
-                    TODO2 += "*** ERROR LINE " + SQL.Lineas(Read) + ". *** Exponent Error: \t\t" + SQL.Texto + "\n";
-                    break;
-                case ERROR_IDENTIFICADOR:
-                    TODO.addElement("*** ERROR LINE " + SQL.Lineas(Read) + ". *** Identifier Error: \t" + SQL.Texto + "\n\n");
-                    TODO2 += "*** ERROR LINE " + SQL.Lineas(Read) + ". *** Identifier Error: \t" + SQL.Texto + "\n";
-                    break;
                 /*case OPERADOR:
                     TODO.addElement(SQL.Texto + "\t Linea " + SQL.Lineas(Read) + "\t Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + " es '" + SQL.Texto + "'\n");
                     TODO2 += SQL.Texto + "\t Linea " + SQL.Lineas(Read) + "\t Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length())  + " es '" + SQL.Texto + "'\n";
