@@ -1,7 +1,7 @@
-DECLARE @sid_in vARcHaR(100); -- ID no data type
-SET @sid_in = 'S-1-5-21-789336058-1580436667-1343024091-34374 /*this is NOT a comment*/'; -- a string
+DECLARE @sid_in VARCHAR(100);
+SET @sid_in = 'S-1-5-21-789336058-1580436667-1343024091-34374';
 
-DECLARE @sql NVARCHAR(MAX) = 'CREATE LOGIN [URL\dagutierrez] WITH SID = ' + CONVERT(VARCHAR(64), CONVERT(BINARY(16),SID_BINARY(@sid_in)), 1) + ';'; -- nvarchar as ID,  SID_BINARY as ID
+DECLARE @sql NVARCHAR(MAX) = 'CREATE LOGIN [URL\dagutierrez] WITH SID = ' + CONVERT(VARCHAR(64), CONVERT(BINARY(16),SID_BINARY(@sid_in)), 1) + ';';
 
 PRINT @sql
 EXEC sys.sp_executesql @sql;
@@ -11,74 +11,80 @@ EXEC sys.sp_executesql @sql;
 
 -- DECLARE @number varchar(100);
 
-SELECT SUSER_SNAME(CONVERT(BINARY(16),SID_BINARY(@sid_in))); -- id
+SELECT SUSER_SNAME(CONVERT(BINARY(16),SID_BINARY(@sid_in)));
 
-ALTER TABLE [dbo].[InformeViajes] DROP CONSTRAINT [CK__InformeVi__Pasaj__6D0D32F4]
+
+ALTER TABLE [dbo].[InformeViajes] DROP CONSTRAINT [FK__InformeVi__NITCo__6A30C649]
 GO
-ALTER TABLE [dbo].[Reparaciones] DROP CONSTRAINT [FK__Reparacio__Placa__619B8048]
+ALTER TABLE [dbo].[InformeViajes] DROP CONSTRAINT [FK__InformeVi__Codig__6B24EA82]
 GO
-ALTER TABLE [dbo].[Reparaciones] DROP CONSTRAINT [FK__Reparacio__NIT_M__60A75C0F]
+ALTER TABLE [dbo].[Inactividad] DROP CONSTRAINT [FK__Inactivid__Placa__4CA06362]
 GO
-ALTER TABLE [dbo].[Piezas] DROP CONSTRAINT [FK__Piezas__NITProve__5DCAEF64]
+ALTER TABLE [dbo].[Despidos] DROP CONSTRAINT [FK__Despidos__NITDes__59063A47]
 GO
-ALTER TABLE [dbo].[Paradas] DROP CONSTRAINT [FK__Paradas__CodigoR__68487DD7]
+ALTER TABLE [dbo].[Conductor] DROP CONSTRAINT [FK__Conductor__Placa__5070F446]
 GO
-ALTER TABLE [dbo].[Mecanico] DROP CONSTRAINT [FK__Mecanico__NITMec__534D60F1]
+ALTER TABLE [dbo].[Conductor] DROP CONSTRAINT [FK__Conductor__NITCo__4F7CD00D]
 GO
-ALTER TABLE [dbo].[InformeViajes] DROP CONSTRAINT [FK__InformeVi__Placa__6C190EBB]
+ALTER TABLE [dbo].[Averia_Reparacion] DROP CONSTRAINT [FK__Averia_Re__Pieza__6477ECF3]
 GO
 
-CREATE TABLE [dbo].[AutoBus](
-	[Placa] [nvarchar](128) NOT NULL,
-	[Marca] [nvarchar](128) NULL,
-	[Modelo] [nvarchar](128) NULL,
-	[Año] [int] NULL,
-	[FechaAdquisicion] [date] NULL,
-	[Color] [nvarchar](128) NULL,
-	[NumAscientos] [int] NULL,
-	[Longitud] [int] NULL,
-	[Anchura] [int] NULL,
-	[Potencia] [int] NULL,
-	[Transmision] [nvarchar](128) NULL,
-	[Kilometraje] [int] NULL,
-	[AñoVida] [int] NULL,
+CREATE TABLE [dbo].[Reparaciones](
+	[Codigo] [int] IDENTITY(1,1) NOT NULL,
+	[NIT_Mecanico] [nvarchar](128) NULL,
+	[FechaReparacion] [date] NOT NULL,
+	[PlacaBus] [nvarchar](128) NULL,
 PRIMARY KEY CLUSTERED 
 (
-	[Placa] ASC
+	[Codigo] ASC
+)
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Rutas]    Script Date: 8/26/2019 10:03:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Rutas](
+	[Codigo] [int] IDENTITY(1,1) NOT NULL,
+	[Origen] [nvarchar](128) NOT NULL,
+	[Destino] [nvarchar](128) NOT NULL,
+	[Tiempo] [nvarchar](128) NOT NULL,
+	[Costo] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Codigo] ASC
 )
 ) ON [PRIMARY]
 GO
 
-DECLARE @number INT; -- ID no data type
-SET @number = +0000000000000000000000000000001; -- an int
-
 DECLARE @var CHAR(100);
-set @var = ?'$';
+set @var = $'?';
 
-/****** Object:  Database [LineaDiamante]    Script Date: 8/26/2019 10:03:13 PM ******/
-DROP DATABASE [LineaDiamante]
+/****** Object:  Database [LineaDorada]    Script Date: 8/26/2019 10:03:13 PM ******/
+DROP DATABASE [LineaDorada]
 GO
-/****** Object:  Database [LineaDiamante]    Script Date: 8/26/2019 10:03:13 PM ******/
-CREATE DATABASE [LineaDiamante]
+/****** Object:  Database [LineaDorada]    Script Date: 8/26/2019 10:03:13 PM ******/
+CREATE DATABASE [LineaDorada]
  CONTAINMENT = NULL
  ON  PRIMARY 
-( NAME = 'LineaDiamante', FILENAME = 'D:\NDocuments\SQL\MSSQL14.MSSQLSERVER\MSSQL\DATA\LineaDiamante.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 00000012.e-2 ) -- valid float
+( NAME = 'LineaDorada', FILENAME = 'D:\NDocuments\SQL\MSSQL14.MSSQLSERVER\MSSQL\DATA\LineaDorada.mdf' , SIZE = 0X8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 00000000000.00000000022e+2 ) -- valid float
  LOG ON 
-( NAME = 'LineaDiamante_log', FILENAME = 'D:\NDocuments\SQL\MSSQL14.MSSQLSERVER\MSSQL\Log\LineaDiamante_log.ldf' , SIZE = 0x8192KB , MAXSIZE = 2048GB , FILEGROWTH = .12E0000000002 ) -- incorrect float
+( NAME = 'LineaDorada_log', FILENAME = 'D:\NDocuments\SQL\MSSQL14.MSSQLSERVER\MSSQL\Log\LineaDorada_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = .12E0000000002 ) -- incorrect float
 GO
+ALTER DATABASE [LineaDorada] SET COMPATIBILITY_LEVEL = 140
+GO
+IF (1 = SERVERPROPERTYGLOBALFULLTEXTSERVICEGENERALPROPERTY('IsFullTextInstalled')) -- id too long
+begin
+EXEC [LineaDorada].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+
+DECLARE @number INT; -- ID no data type
+SET @number = -0000000000000000000000000000001; -- an int
+
+/* comment without ending, should continue
 
 DECLARE @path VARCHAR(MAX); 
 SET @path = ' This a string without ending
 not the same string, all should be ids except _thiserror';
-
-
-/* comment without ending, should continue
-
-ALTER DATABASE [LineaDiamante] SET COMPATIBILITY_LEVEL = 120
-GO
-IF (1 = SERVERPROPERTYGLOBALFULLTEXTSERVICEGENERALPROPERTY('IsFullTextInstalled')) -- id too long
-begin
-EXEC [LineaDiamante].[dbo].[sp_fulltext_database] @action = 'enable'
-end
-GO
-
