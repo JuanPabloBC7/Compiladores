@@ -22,8 +22,8 @@ import javax.swing.JOptionPane;
  *
  * @author jpbalan
  */
-public class Methods {
-    ArrayList<String> Lista = new ArrayList<>();
+public class F1_Methods {
+    ArrayList<String> pl_Lista_Errores = new ArrayList<>();
     DefaultListModel Object = new DefaultListModel();
     DefaultListModel Column = new DefaultListModel();
     DefaultListModel Line = new DefaultListModel();
@@ -71,8 +71,8 @@ public class Methods {
         }
         Reader Read = new BufferedReader(new FileReader("Archivo.txt"));
         F1_MiniSQL SQL = new F1_MiniSQL(Read);
-        DefaultListModel TODO = new DefaultListModel();
-        String TODO2 = "";
+        DefaultListModel ll_Lista_Archivo = new DefaultListModel();
+        String ls_Cadena_Errores = "";
         
         String SalidaURL = Archivo.getPath();
         SalidaURL = SalidaURL.split("\\.")[0];
@@ -85,13 +85,13 @@ public class Methods {
             Token T = SQL.yylex();
             if(T == null)
             {
-                for (int i = 0; i < TODO.size(); i++) 
+                for (int i = 0; i < ll_Lista_Archivo.size(); i++) 
                 {
-                    Lista.add(TODO2);
-                    BW.write(TODO.getElementAt(i).toString());
+                    pl_Lista_Errores.add(ls_Cadena_Errores);
+                    BW.write(ll_Lista_Archivo.getElementAt(i).toString());
                     BW.newLine();
                 }
-//                JOptionPane.showMessageDialog(null, " " + TODO2, "FASE_1 COMPILADORES",JOptionPane.OK_OPTION);
+//                JOptionPane.showMessageDialog(null, " " + ls_Cadena_Errores, "FASE_1 COMPILADORES",JOptionPane.OK_OPTION);
 //                for (int i = 0; i < TOKENS.size() ; i++) 
 //                {
 //                    jTextArea1.setText(TOKENS2);
@@ -111,23 +111,23 @@ public class Methods {
             switch(T)
             {
                 case ERROR:                                      //----------------------------------------
-                    TODO.addElement("*** " + T + " LINE " + SQL.Lineas(Read) + ". *** Unrecognized Character: \t" + SQL.Texto + "\n\n");
-                    TODO2 += "*** " + T + " LINE " + SQL.Lineas(Read) + ". *** Unrecognized Character: \t" + SQL.Texto + "\n";
+                    ll_Lista_Archivo.addElement("*** " + T + " LINE " + SQL.Lineas(Read) + ". *** Unrecognized Character: \t" + SQL.Texto + "\n");
+                    ls_Cadena_Errores += "*** " + T + " LINE " + SQL.Lineas(Read) + ". *** Unrecognized Character: \t" + SQL.Texto + "\n";
                     
                     break;
                 case ERROR_COMENTARIO:
-                    TODO.addElement("*** ERROR LINE " + SQL.Lineas(Read) + ". *** Comment Error: \t" + SQL.Texto + "\n\n");
-                    TODO2 += "*** ERROR LINE " + SQL.Lineas(Read) + ". *** Comment Error: \ts" + SQL.Texto + "\n";
+                    ll_Lista_Archivo.addElement("*** ERROR LINE " + SQL.Lineas(Read) + ". *** Comment Error: \t" + SQL.Texto + "\n");
+                    ls_Cadena_Errores += "*** ERROR LINE " + SQL.Lineas(Read) + ". *** Comment Error: \ts" + SQL.Texto + "\n";
                     break;
                 /*case OPERADOR:
-                    TODO.addElement(SQL.Texto + "\t Linea " + SQL.Lineas(Read) + "\t Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + " es '" + SQL.Texto + "'\n");
-                    TODO2 += SQL.Texto + "\t Linea " + SQL.Lineas(Read) + "\t Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length())  + " es '" + SQL.Texto + "'\n";
+                    ll_Lista_Archivo.addElement(SQL.Texto + "\t Linea " + SQL.Lineas(Read) + "\t Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + " es '" + SQL.Texto + "'\n");
+                    ls_Cadena_Errores += SQL.Texto + "\t Linea " + SQL.Lineas(Read) + "\t Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length())  + " es '" + SQL.Texto + "'\n";
                     break;*/
                 case IDENTIFICADOR:
                     if (SQL.Texto.length() > 31)
                     {
-                        TODO.addElement("\n*** ERROR LINE " + SQL.Lineas(Read) + ". *** Truncated idntifier: \t" + SQL.Texto.substring(0,31) + "\n\n");
-                        TODO2 += "*** ERROR LINE " + SQL.Lineas(Read) + ". *** Truncated idntifier: \t" + SQL.Texto.substring(0,31) + "\n";
+                        ll_Lista_Archivo.addElement("\n*** ERROR LINE " + SQL.Lineas(Read) + ". *** Truncated idntifier: \t" + SQL.Texto.substring(0,31) + "\n");
+                        ls_Cadena_Errores += "*** ERROR LINE " + SQL.Lineas(Read) + ". *** Truncated idntifier: \t" + SQL.Texto.substring(0,31) + "\n";
                     }
                     else
                     {
@@ -136,7 +136,7 @@ public class Methods {
                         Line.addElement("" + SQL.Lineas(Read));
                         TokenType.addElement("" + T);
                         Value.addElement("");
-                        TODO.addElement("Linea " + SQL.Lineas(Read) + " Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + "     \t " + SQL.Texto + "          \t es " + T + "\n");
+                        ll_Lista_Archivo.addElement("Linea " + SQL.Lineas(Read) + " Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + "     \t " + SQL.Texto + "          \t es " + T);
                         //TODO2 += "Linea " + SQL.Lineas(Read) + " Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + "     \t " + SQL.Texto + "          \t es " + T + "\n";
                     }
                     break;
@@ -150,7 +150,7 @@ public class Methods {
                         Line.addElement("" + SQL.Lineas(Read));
                         TokenType.addElement("" + T);
                         Value.addElement("" + SQL.Texto);
-                        TODO.addElement("Linea " + SQL.Lineas(Read) + " Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + "     \t " + SQL.Texto + "          \t es " + T + " (value = " + SQL.Texto + ")\n");
+                        ll_Lista_Archivo.addElement("Linea " + SQL.Lineas(Read) + " Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + "     \t " + SQL.Texto + "          \t es " + T + " (value = " + SQL.Texto);
                         //TODO2 += "Linea " + SQL.Lineas(Read) + " Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length())  + "     \t " + SQL.Texto + "          \t es " + T + " (value = " + SQL.Texto + ")\n";
                     }
                     else
@@ -160,7 +160,7 @@ public class Methods {
                         Line.addElement("" + SQL.Lineas(Read));
                         TokenType.addElement("" + T);
                         Value.addElement("");
-                        TODO.addElement("Linea " + SQL.Lineas(Read) + " Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + "     \t " + SQL.Texto + "          \t es " + T + "\n");
+                        ll_Lista_Archivo.addElement("Linea " + SQL.Lineas(Read) + " Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + "     \t " + SQL.Texto + "          \t es " + T);
                         //TODO2 += "Linea " + SQL.Lineas(Read) + " Columnas: " + SQL.Columnas(Read) + "-" + (SQL.Columnas(Read)+SQL.Texto.length()) + "     \t " + SQL.Texto + "          \t es " + T + "\n";
                     }
             }

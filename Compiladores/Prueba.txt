@@ -1,13 +1,1 @@
-
---Hola esto es un comentario 
-Hola_esto_no_es_comentario
-*/
-
-.12 --No es valida
-
- .12E+2 --No es valida
-
-select
-Select
-SELECT
-
+    TRUNCATE TABLE INSERT

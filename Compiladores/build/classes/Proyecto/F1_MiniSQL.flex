@@ -14,8 +14,7 @@ P_Reservadas= "ABSOLUTE" | "ACTION" | "ADA" | "ADD" | "ALL" | "ALLOCATE" | "ALTE
                 Mini-SQL distingue entre mayúsculas y minúsculas (case sensitive).
                         SELECT es una palabra clave pero select es un identificador
                         binky y Binky son dos identificadores distintos.*/
-Identificadores = [A-Za-z]([_]|[A-Za-z]|[0-9]|"ñ"|"Ñ")*                                 
-//ERROR_IDENTIFICADOR = (_)([_]|[0-9]|[A-Za-z])+
+Identificadores = [A-Za-z]([_]|[A-Za-z]|[0-9]|"ñ"|"Ñ")*                         //ERROR_IDENTIFICADOR = (_)([_]|[0-9]|[A-Za-z])+
 
 /*---------------------------------Constantes---------------------------------------------------------------------------------------------------------------------------------------------
                 Las constantes booleanas son de tipo bit y pueden guardar valores: 0, 1 o NULL.
@@ -96,8 +95,8 @@ Operadores = \+ | - | \* | \/ | % | < | "<=" | > | ">=" | = | "==" | "!=" | "&&"
 {Operadores} {Texto = yytext(); return OPERADOR;}
 {Identificadores} {Texto = yytext(); return IDENTIFICADOR;}
 
-/*{ERROR_IDENTIFICADOR}   {Texto = yytext(); return ERROR;}
-{ERROR_EXPONENTE}       {Texto = yytext(); return ERROR;}
-{ERROR_DOUBLE}          {Texto = yytext(); return ERROR;}
-{ERROR_STRING}          {Texto = yytext(); return ERROR;}*/
+                                                                                /*{ERROR_IDENTIFICADOR}   {Texto = yytext(); return ERROR;}
+                                                                                {ERROR_EXPONENTE}       {Texto = yytext(); return ERROR;}
+                                                                                {ERROR_DOUBLE}          {Texto = yytext(); return ERROR;}
+                                                                                {ERROR_STRING}          {Texto = yytext(); return ERROR;}*/
 . {Texto = yytext(); return ERROR;}

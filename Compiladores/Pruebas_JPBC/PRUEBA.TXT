@@ -1,8 +1,5 @@
 /* Revisión 2 - MMHM: aprobado  */
 
-USE Portal;
-GO
-
 -- ================================================================================================           
 -- Universidad Rafael Landívar           
 -- Autor: Brayan Rodríguez García (19268) - BKRG          
