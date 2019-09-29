@@ -30,17 +30,16 @@ public class F2_DDL_TRUNCATE {
                     h++;
                     if(NT_FIN(Object, Line, TokenType)){
                         h++;
-                        ls_Sentencia_Hija_Errores += ("TRUNCATE Leido correctamente.\n");
+                        ls_Sentencia_Hija_Errores = ("TRUNCATE Leido correctamente.\n");
                         return h;
                     }
                 }
             } else {
                 
-                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'TABLE'\n");
                 return h;
             }
         }
-        ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** TRUNCATE no leido correctamente\n");
+        ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** TRUNCATE no leido correctamente\n");
         return h;
     }
     
@@ -51,7 +50,6 @@ public class F2_DDL_TRUNCATE {
                 return true;   
             }
         }else{
-            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'TABLE NAME'\n");
             return false;
         }
         return false;
@@ -70,7 +68,6 @@ public class F2_DDL_TRUNCATE {
                 if(TokenType.getElementAt(h).equals("IDENTIFICADOR")){
                     return true;
                 } else {
-                    ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
                     return false;
                 }
             }
@@ -84,7 +81,7 @@ public class F2_DDL_TRUNCATE {
             if(TokenType.getElementAt(h).equals("IDENTIFICADOR")){
                 return true;
             } else {
-                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
+                ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
                 return false;
             }
         }else{h--; return true;}
@@ -96,7 +93,7 @@ public class F2_DDL_TRUNCATE {
         } else if(Object.getElementAt(h).equals("GO")){
             return true;
         } else {
-            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'; OR GO'\n");
+            ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'; OR GO'\n");
             return false;
         }
     }

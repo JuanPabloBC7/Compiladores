@@ -30,6 +30,7 @@ public class F2_Methods {
     DefaultListModel TokenType = new DefaultListModel();
     DefaultListModel Value = new DefaultListModel();
     
+    ArrayList<String> pl_Lista_Errores = new ArrayList<>();
     String ps_Sentencia_Errores;
     
     public void F2_AnalizadorSintactico(File Path) throws FileNotFoundException, IOException{
@@ -197,7 +198,7 @@ public class F2_Methods {
                     break;
                     
                 default:
-                    ps_Sentencia_Errores = ps_Sentencia_Errores +("*** ERROR LINE " + Line.getElementAt(i) + ". *** Expected a \t'RESERVED WORD'");
+                    //ps_Sentencia_Errores = ps_Sentencia_Errores +("*** ERROR LINE " + Line.getElementAt(i) + ". *** Expected a \t'RESERVED WORD'");
                     break;
             }
         }

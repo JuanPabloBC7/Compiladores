@@ -32,36 +32,30 @@ public class F2_DML_INSERT {
                                 h++;
                                 if(NT_FIN(Object, Line, TokenType)){
                                     h++;
-                                    ls_Sentencia_Hija_Errores += ("INSERT Leido correctamente.\n");
+                                    ls_Sentencia_Hija_Errores = ("INSERT Leido correctamente.\n");
                                     return h;
                                 }
                             }
                         } else {
-                            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
-                            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
                             return h;
                         }
                     }
                 } else {
-                    ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
-                    ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
                     return h;
                 }
             } else if(NT_INTO(Object, Line, TokenType)){
                 h++;
                 if(NT_FIN(Object, Line, TokenType)){
                     h++;
-                    ls_Sentencia_Hija_Errores += ("INSERT Leido correctamente.\n");
+                    ls_Sentencia_Hija_Errores = ("INSERT Leido correctamente.\n");
                     return h;
                 }
             }  else {
-                ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'TOP OR OTHER'\n");
-                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'TOP OR OTHER'\n");
                 return h;
             }
         }        
         ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** INSERT no leido correctamente\n");
-        ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** INSERT no leido correctamente\n");
+        ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** INSERT no leido correctamente\n");
         return h;
     }
     
@@ -74,8 +68,6 @@ public class F2_DML_INSERT {
         }else if(NT_INTO2(Object, Line, TokenType)){
             return true;
         } else {
-            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'INTO'\n");
-            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'INTO'\n");
             return false;
         }
         return false;
@@ -108,35 +100,26 @@ public class F2_DML_INSERT {
                         if(TokenType.getElementAt(h).equals("IDENTIFICADOR")){
                             return true;
                         } else {
-                            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
-                            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
                             return false;
                         }
-                    } else {
-                        ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'.'\n");
-                        ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'.'\n");
-                        return false;
-                    }
+                    } 
                 }else if(Object.getElementAt(h).equals(".")){
                     h++;
                     if(TokenType.getElementAt(h).equals("IDENTIFICADOR")){
                         return true;
                     } else {
                         ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
-                        ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
+                        ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
                         return false;
                     }
                 } else {
-                    ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID OR .'\n");
-                    ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID OR .'\n");
                     return false;
                 }
             }else{h--; return true;}
         } else {
-            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
-            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
             return false;
         }
+        return false;
     }
     
     public boolean NT_RowsetFunc(DefaultListModel Object, DefaultListModel Line, DefaultListModel TokenType) throws IOException{
@@ -153,35 +136,25 @@ public class F2_DML_INSERT {
                             if(Object.getElementAt(h).equals(")")){
                                 return true;
                             } else {
-                                ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
-                                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
                                 return false;
                             }
                         } else {
                             ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
-                            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
+                            ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
                             return false;
                         }
                     } else {
-                        ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t','\n");
-                        ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t','\n");
                         return false;
                     }
                 } else {
-                    ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
-                    ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
                     return false;
                 }
             } else {
-                ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
-                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
                 return false;
             }
         } else if(NT_oRowset(Object, Line, TokenType)){
             return true;
         } else {
-            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'OPENQUERY'\n");
-            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'OPENQUERY'\n");
             return false;
         }
     }
@@ -204,8 +177,6 @@ public class F2_DML_INSERT {
                                     if(Object.getElementAt(h).equals(")")){
                                         return true;
                                     } else {
-                                        ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
-                                        ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
                                         return false;
                                     }
                                 }
@@ -224,59 +195,38 @@ public class F2_DML_INSERT {
                                                     if(Object.getElementAt(h).equals(")")){
                                                         return true;
                                                     } else {
-                                                        ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
-                                                        ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
                                                         return false;
                                                     }
                                                 }
                                             } else {
-                                                ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t','\n");
-                                                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t','\n");
                                                 return false;
                                             }
                                         } else {
-                                            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'STRING'\n");
-                                            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'STRING'\n");
                                             return false;
                                         }
                                     } else {
-                                        ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t';'\n");
-                                        ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t';'\n");
                                         return false;
                                     }
                                 } else {
-                                    ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'STRING'\n");
-                                    ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'STRING'\n");
                                     return false;
                                 }
                             } else {
-                                ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t', OR ;'\n");
-                                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t', OR ;'\n");
                                 return false;
                             }
                         } else {
-                            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'STRING'\n");
-                            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'STRING'\n");
-                            return false;
                         }
                     } else {
-                        ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t','\n");
-                        ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t','\n");
                         return false;
                     }
                 } else {
-                    ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'STRING'\n");
-                    ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'STRING'\n");
                     return false;
                 }
             } else {
                 ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
-                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
+                ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
                 return false;
             }
         } else {
-            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'OPENROWSET'\n");
-            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'OPENROWSET'\n");
             return false;
         }
         return false;
@@ -288,8 +238,6 @@ public class F2_DML_INSERT {
         } else if(TokenType.getElementAt(h).equals("CADENA")){
             return true;
         } else {
-            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'STRING'\n");
-            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'STRING'\n");
             return false;
         }
     }
@@ -305,16 +253,12 @@ public class F2_DML_INSERT {
                         return true;
                     }
                 } else {
-                    ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
-                    ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
                     return false;
                 }
             }
         }else if(NT_VALUES(Object, Line, TokenType)){
                         return true;
         } else {
-            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
-            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
             return false;
         }
         return false;
@@ -327,8 +271,6 @@ public class F2_DML_INSERT {
                 return true;
             }
         } else {
-            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
-            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
             return false;
         }
         return false;
@@ -344,7 +286,7 @@ public class F2_DML_INSERT {
                 }
             } else {
                 ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
-                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
+                ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
                 return false;
             }
         }else {h--; return true;}
@@ -362,13 +304,9 @@ public class F2_DML_INSERT {
             if(Object.getElementAt(h).equals("VALUES")){
                 return true;
             } else {
-                ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'VALUES'\n");
-                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'VALUES'\n");
                 return false;
             }
         } else {
-            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'VALUES OR DEFAULT'\n");
-            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'VALUES OR DEFAULT'\n");
             return false;
         }
         return false;
@@ -388,13 +326,11 @@ public class F2_DML_INSERT {
                         }
                     } else {
                         ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
-                        ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
+                        ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
                         return false;
                     }
                 }
             } else {
-                ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'DEFAULT'\n");
-                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'DEFAULT'\n");
                 return false;
             }
         } else if(Object.getElementAt(h).equals("(")){
@@ -410,13 +346,11 @@ public class F2_DML_INSERT {
                         }
                     } else {
                         ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
-                        ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
+                        ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
                         return false;
                     }
                 }
             } else {
-                ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'NULL'\n");
-                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'NULL'\n");
                 return false;
             }
         } else if(Object.getElementAt(h).equals("(")){
@@ -432,14 +366,12 @@ public class F2_DML_INSERT {
                         }
                     } else {
                         ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
-                        ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
+                        ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
                         return false;
                     }
                 }
             }
         } else {
-            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
-            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
             return false;
         }
         return false;
@@ -454,8 +386,6 @@ public class F2_DML_INSERT {
                     return true;
                 }
             } else {
-                ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'DEFAULT'\n");
-                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'DEFAULT'\n");
                 return false;
             }
         } else if(Object.getElementAt(h).equals(",")){
@@ -466,8 +396,6 @@ public class F2_DML_INSERT {
                     return true;
                 }
             } else {
-                ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'NULL'\n");
-                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'NULL'\n");
                 return false;
             }
         } else if(Object.getElementAt(h).equals(",")){
@@ -496,13 +424,11 @@ public class F2_DML_INSERT {
                         }
                     } else {
                         ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
-                        ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
+                        ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
                         return false;
                     }
                 }
             } else {
-                ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'DEFAULT'\n");
-                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'DEFAULT'\n");
                 return false;
             }
         } else if(Object.getElementAt(h).equals("(")){
@@ -518,13 +444,11 @@ public class F2_DML_INSERT {
                         }
                     } else {
                         ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
-                        ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
+                        ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
                         return false;
                     }
                 }
             } else {
-                ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'NULL'\n");
-                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'NULL'\n");
                 return false;
             }
         } else if(Object.getElementAt(h).equals("(")){
@@ -540,14 +464,14 @@ public class F2_DML_INSERT {
                         }
                     } else {
                         ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
-                        ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
+                        ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
                         return false;
                     }
                 }
             }
         } else {
             ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
-            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
+            ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
             return false;
         }
         return false;
@@ -565,8 +489,6 @@ public class F2_DML_INSERT {
                 if(TokenType.getElementAt(h).equals("IDENTIFICADOR")){
                     return true;
                 } else {
-                    ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
-                    ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
                     return false;
                 }
             }
@@ -576,7 +498,7 @@ public class F2_DML_INSERT {
                 return true;
             } else {
                 ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
-                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
+                ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
                 return false;
             }
         } else if(Object.getElementAt(h).equals("(")){
@@ -586,8 +508,6 @@ public class F2_DML_INSERT {
                 if(Object.getElementAt(h).equals(")")){
                     return true;
                 } else {
-                    ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
-                    ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
                     return false;
                 }
             }
@@ -612,8 +532,6 @@ public class F2_DML_INSERT {
         } else if(NT_EXPRESSION(Object, Line, TokenType)){
             return true;
         } else {
-            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'EXPRESSION'\n");
-            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'EXPRESSION'\n");
             return false;
         }
         return false;
@@ -627,8 +545,6 @@ public class F2_DML_INSERT {
         } else if(TokenType.getElementAt(h).equals("ENTERO")){
             return true;
         } else {
-            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'STRING OR NUMBER'\n");
-            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'STRING OR NUMBER'\n");
             return false;
         }
     }
@@ -685,8 +601,6 @@ public class F2_DML_INSERT {
         } else if(Object.getElementAt(h).equals("SOME")){
             return true;
         } else {
-            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'OPERATOR'\n");
-            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'OPERATOR'\n");
             return false;
         }
     }
@@ -703,15 +617,11 @@ public class F2_DML_INSERT {
                         if(Object.getElementAt(h).equals(")")){
                             return true;
                         } else {
-                            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
-                            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
                             return false;
                         }
                     }
                 }
             } else {
-                ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
-                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
                 return false;
             }
         } else if(Object.getElementAt(h).equals("GETDATE")){
@@ -722,17 +632,15 @@ public class F2_DML_INSERT {
                     return true;
                 } else {
                     ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
-                    ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
+                    ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t')'\n");
                     return false;
                 }
             } else {
-                ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
-                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'('\n");
                 return false;
             }
         } else {
             ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'SUM OR GETDATE'\n");
-            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'SUM OR GETDATE'\n");
+            ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'SUM OR GETDATE'\n");
             return false;
         }
         return false;
@@ -753,7 +661,7 @@ public class F2_DML_INSERT {
             return true;
         } else {
             ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'; OR GO'\n");
-            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'; OR GO'\n");
+            ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'; OR GO'\n");
             return false;
         }
     }

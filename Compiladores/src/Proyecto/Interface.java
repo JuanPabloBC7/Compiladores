@@ -240,7 +240,10 @@ public class Interface extends javax.swing.JFrame {
         F2_Methods F2_M = new F2_Methods();
         try {
             F2_M.F2_AnalizadorSintactico(Archivo);
-                  
+            
+            for (int i = 0; i < F2_M.pl_Lista_Errores.size(); i++) {
+                jTextArea2.setText(F2_M.pl_Lista_Errores.get(i));
+            }
             jTextArea2.setText(F2_M.ps_Sentencia_Errores);
             
         } catch (IOException ex) {
