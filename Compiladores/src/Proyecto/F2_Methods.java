@@ -30,7 +30,6 @@ public class F2_Methods {
     DefaultListModel TokenType = new DefaultListModel();
     DefaultListModel Value = new DefaultListModel();
     
-    DefaultListModel pl_Sentencia_Archivo = new DefaultListModel();
     String ps_Sentencia_Errores;
     
     public void F2_AnalizadorSintactico(File Path) throws FileNotFoundException, IOException{
@@ -154,61 +153,51 @@ public class F2_Methods {
                         case " SELECT":
                             F2_DML_SELECT SEL = new F2_DML_SELECT();
                             i = SEL.S1(Object, Line, TokenType, i) - 1;
-                            pl_Sentencia_Archivo = SEL.ll_Sentencia_Hija_Archivo;
-                            ps_Sentencia_Errores = SEL.ls_Sentencia_Hija_Errores;
+                            ps_Sentencia_Errores = ps_Sentencia_Errores +SEL.ls_Sentencia_Hija_Errores;
                             break;
                         case "INSERT":
                             F2_DML_INSERT INS = new F2_DML_INSERT();
                             i = INS.NT_INSERT(Object, Line, TokenType, i) - 1;
-                            pl_Sentencia_Archivo = INS.ll_Sentencia_Hija_Archivo;
-                            ps_Sentencia_Errores = INS.ls_Sentencia_Hija_Errores;
+                            ps_Sentencia_Errores = ps_Sentencia_Errores +INS.ls_Sentencia_Hija_Errores;
                             break;
                         case "UPDATE":
                             F2_DML_UPDATE UPD = new F2_DML_UPDATE();
                             i = UPD.NT_UPDATE(Object, Line, TokenType, i) - 1;
-                            pl_Sentencia_Archivo = UPD.ll_Sentencia_Hija_Archivo;
-                            ps_Sentencia_Errores = UPD.ls_Sentencia_Hija_Errores;
+                            ps_Sentencia_Errores = ps_Sentencia_Errores +UPD.ls_Sentencia_Hija_Errores;
                             break;
                         case "DELETE":
                             F2_DML_DELETE DEL = new F2_DML_DELETE();
                             i = DEL.S1(Object, Line, TokenType, i) - 1;
-                            pl_Sentencia_Archivo = DEL.ll_Sentencia_Hija_Archivo;
-                            ps_Sentencia_Errores = DEL.ls_Sentencia_Hija_Errores;
+                            ps_Sentencia_Errores = ps_Sentencia_Errores +DEL.ls_Sentencia_Hija_Errores;
                             break;
                         case "CREATE":
                             F2_DDL_CREATE CRE = new F2_DDL_CREATE();
                             i = CRE.NT_CREATE(Object, Line, TokenType, i) - 1;
-                            pl_Sentencia_Archivo = CRE.ll_Sentencia_Hija_Archivo;
-                            ps_Sentencia_Errores = CRE.ls_Sentencia_Hija_Errores;
+                            ps_Sentencia_Errores = ps_Sentencia_Errores +CRE.ls_Sentencia_Hija_Errores;
                             break;
                         case "ALTER":
                             F2_DDL_ALTER ALT = new F2_DDL_ALTER();
                             i = ALT.NT_ALTER(Object, Line, TokenType, i) - 1;
-                            pl_Sentencia_Archivo = ALT.ll_Sentencia_Hija_Archivo;
-                            ps_Sentencia_Errores = ALT.ls_Sentencia_Hija_Errores;
+                            ps_Sentencia_Errores = ps_Sentencia_Errores +ALT.ls_Sentencia_Hija_Errores;
                             break;
                         case "DROP":
                             F2_DDL_DROP DRO = new F2_DDL_DROP();
                             i = DRO.NT_DROP(Object, Line, TokenType, i) - 1;
-                            pl_Sentencia_Archivo = DRO.ll_Sentencia_Hija_Archivo;
-                            ps_Sentencia_Errores = DRO.ls_Sentencia_Hija_Errores;
+                            ps_Sentencia_Errores = ps_Sentencia_Errores + DRO.ls_Sentencia_Hija_Errores;
                             break;
                         case "TRUNCATE":
                             F2_DDL_TRUNCATE TRU = new F2_DDL_TRUNCATE();
                             i = TRU.NT_TRUNCATE(Object, Line, TokenType, i) - 1;
-                            pl_Sentencia_Archivo = TRU.ll_Sentencia_Hija_Archivo;
-                            ps_Sentencia_Errores = TRU.ls_Sentencia_Hija_Errores;
+                            ps_Sentencia_Errores = ps_Sentencia_Errores + TRU.ls_Sentencia_Hija_Errores;
                             break;
                         default:
-                            pl_Sentencia_Archivo.addElement("\n*** ERROR LINE " + i + ". *** Expected a \t'DDL OR DML SENTENCE'\n");
-                            ps_Sentencia_Errores = ("*** ERROR LINE " + i + ". *** Expected a \t'DDL OR DML SENTENCE'");
+                            ps_Sentencia_Errores = ps_Sentencia_Errores +("*** ERROR LINE " + Line.getElementAt(i) + ". *** Expected a \t'DDL OR DML SENTENCE'");
                             break;
                     }
                     break;
                     
                 default:
-                    pl_Sentencia_Archivo.addElement("\n*** ERROR LINE " + i + ". *** Expected a \t'RESERVED WORD'\n");
-                    ps_Sentencia_Errores = ("*** ERROR LINE " + i + ". *** Expected a \t'RESERVED WORD'");
+                    ps_Sentencia_Errores = ps_Sentencia_Errores +("*** ERROR LINE " + Line.getElementAt(i) + ". *** Expected a \t'RESERVED WORD'");
                     break;
             }
         }

@@ -241,9 +241,8 @@ public class Interface extends javax.swing.JFrame {
         try {
             F2_M.F2_AnalizadorSintactico(Archivo);
                   
-            for (int i = 0; i < F2_M.pl_Sentencia_Archivo.size(); i++) {
-                jTextArea2.setText(F2_M.pl_Sentencia_Archivo.get(i).toString());
-            }
+            jTextArea2.setText(F2_M.ps_Sentencia_Errores);
+            
         } catch (IOException ex) {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
         }

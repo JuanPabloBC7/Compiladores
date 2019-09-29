@@ -17,91 +17,86 @@ import javax.swing.DefaultListModel;
  * @author jpbalan
  */
 public class F2_DDL_TRUNCATE {
-    DefaultListModel ll_Sentencia_Hija_Archivo = new DefaultListModel();
     String ls_Sentencia_Hija_Errores = "";
+    int h; 
     
     public int NT_TRUNCATE(DefaultListModel Object, DefaultListModel Line, DefaultListModel TokenType, int i) throws IOException{
-        if(Object.getElementAt(i).equals("TRUNCATE")){
-            i++;
-            if(Object.getElementAt(i).equals("TABLE")){
-                i++;
-                if(NT_ID(Object, Line, TokenType, i)){
-                    i++;
-                    if(NT_FIN(Object, Line, TokenType, i)){
-                        ll_Sentencia_Hija_Archivo.addElement("TRUNCATE Leido correctamente.");
+        h = i;
+        if(Object.getElementAt(h).equals("TRUNCATE")){
+            h++;
+            if(Object.getElementAt(h).equals("TABLE")){
+                h++;
+                if(NT_ID(Object, Line, TokenType)){
+                    h++;
+                    if(NT_FIN(Object, Line, TokenType)){
+                        h++;
+                        ls_Sentencia_Hija_Errores += ("TRUNCATE Leido correctamente.\n");
+                        return h;
                     }
                 }
             } else {
-                ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(i) + ". *** Expected a \t'TABLE'\n");
-                ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(i) + ". *** Expected a \t'TABLE'");
+                
+                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'TABLE'\n");
+                return h;
             }
         }
-        ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(i) + ". *** TRUNCATE no leido correctamente\n");
-        ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(i) + ". *** TRUNCATE no leido correctamente\n");
-        return i;
+        ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** TRUNCATE no leido correctamente\n");
+        return h;
     }
     
-    public boolean NT_ID(DefaultListModel Object, DefaultListModel Line, DefaultListModel TokenType, int i) throws IOException{
-        if(TokenType.getElementAt(i).equals("IDENTIFICADOR")){
-            i++;
-            if(NT_ID2(Object, Line, TokenType, i)){
+    public boolean NT_ID(DefaultListModel Object, DefaultListModel Line, DefaultListModel TokenType) throws IOException{
+        if(TokenType.getElementAt(h).equals("IDENTIFICADOR")){
+            h++;
+            if(NT_ID2(Object, Line, TokenType)){
                 return true;   
             }
         }else{
-            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(i) + ". *** Expected a \t'TABLE NAME'\n");
-            ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(i) + ". *** Expected a \t'TABLE NAME'");
+            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'TABLE NAME'\n");
             return false;
         }
         return false;
     }
     
-    public boolean NT_ID2(DefaultListModel Object, DefaultListModel Line, DefaultListModel TokenType, int i) throws IOException{
-        if(Object.getElementAt(i).equals(".")){
-            i++;
-            if(TokenType.getElementAt(i).equals("IDENTIFICADOR")){
-                i++;
-                if(NT_ID3(Object, Line, TokenType, i)){
+    public boolean NT_ID2(DefaultListModel Object, DefaultListModel Line, DefaultListModel TokenType) throws IOException{
+        if(Object.getElementAt(h).equals(".")){
+            h++;
+            if(TokenType.getElementAt(h).equals("IDENTIFICADOR")){
+                h++;
+                if(NT_ID3(Object, Line, TokenType)){
                     return true;
                 }
-            } else if(Object.getElementAt(i).equals(".")){
-                i++;
-                if(TokenType.getElementAt(i).equals("IDENTIFICADOR")){
+            } else if(Object.getElementAt(h).equals(".")){
+                h++;
+                if(TokenType.getElementAt(h).equals("IDENTIFICADOR")){
                     return true;
                 } else {
-                    ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(i) + ". *** Expected a \t'ID'\n");
-                    ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(i) + ". *** Expected a \t'ID'\n");
+                    ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
                     return false;
                 }
-            }else{ return true; }
-        } else {
-            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(i) + ". *** Expected a \t'.'\n");
-            ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(i) + ". *** Expected a \t'.'\n");
-            return false;
-        } 
+            }
+        } else{h--; return true;}
         return false;
     }
     
-    public boolean NT_ID3(DefaultListModel Object, DefaultListModel Line, DefaultListModel TokenType, int i) throws IOException{
-        if(Object.getElementAt(i).equals(".")){
-            i++;
-            if(TokenType.getElementAt(i).equals("IDENTIFICADOR")){
+    public boolean NT_ID3(DefaultListModel Object, DefaultListModel Line, DefaultListModel TokenType) throws IOException{
+        if(Object.getElementAt(h).equals(".")){
+            h++;
+            if(TokenType.getElementAt(h).equals("IDENTIFICADOR")){
                 return true;
             } else {
-                ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(i) + ". *** Expected a \t'ID'\n");
-                ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(i) + ". *** Expected a \t'ID'\n");
+                ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'ID'\n");
                 return false;
             }
-        }else{ return true; }
+        }else{h--; return true;}
     }
     
-    public boolean NT_FIN(DefaultListModel Object, DefaultListModel Line, DefaultListModel TokenType, int i) throws IOException{
-        if(Object.getElementAt(i).equals(";")){
+    public boolean NT_FIN(DefaultListModel Object, DefaultListModel Line, DefaultListModel TokenType) throws IOException{
+        if(Object.getElementAt(h).equals(";")){
             return true;
-        } else if(Object.getElementAt(i).equals("GO")){
+        } else if(Object.getElementAt(h).equals("GO")){
             return true;
         } else {
-            ll_Sentencia_Hija_Archivo.addElement("\n*** ERROR LINE " + Line.getElementAt(i) + ". *** Expected a \t'; OR GO'\n");
-            ls_Sentencia_Hija_Errores = ("*** ERROR LINE " + Line.getElementAt(i) + ". *** Expected a \t'; OR GO'");
+            ls_Sentencia_Hija_Errores += ("*** ERROR LINE " + Line.getElementAt(h) + ". *** Expected a \t'; OR GO'\n");
             return false;
         }
     }
