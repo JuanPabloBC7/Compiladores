@@ -141,22 +141,26 @@ non terminal DATATYPE, DATATYPE2, DATATYPE3, DATATYPE4, DATATYPE5;
 
 
 /* ------------------- Seccion de la gramatica ------------------------ */
+start with INICIAL;
+
 INICIAL ::= INICIAL DECLARACIO_INICIAL
+        | error PUNTOYCOMA INICIAL
+        | error GO INICIAL
         | /* EPSILON */;
 
-DECLARACIO_INICIAL ::= ROLLB
-    | SAVEP
-    | COM
-    | DEL1 
-    | DROP0
-    | CREATE0
-    | TRUNCATE0
-    | ALTER0
-    | UPDATE0
-    | INSERT1
-    | SELECT1
-    | error PUNTOYCOMA
-    | error GO;
+DECLARACIO_INICIAL ::= ROLLB INICIAL
+    | SAVEP INICIAL
+    | COM INICIAL
+    | DEL1 INICIAL
+    | DROP0 INICIAL
+    | CREATE0 INICIAL
+    | TRUNCATE0 INICIAL
+    | ALTER0 INICIAL
+    | UPDATE0 INICIAL
+    | INSERT1 INICIAL
+    | SELECT1 INICIAL
+    | error PUNTOYCOMA INICIAL
+    | error GO INICIAL; 
 
 
 
