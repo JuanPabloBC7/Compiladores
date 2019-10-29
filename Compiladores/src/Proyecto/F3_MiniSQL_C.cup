@@ -8,9 +8,9 @@ parser code {:
         if (info instanceof java_cup.runtime.Symbol) {
             java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
             if (s.left >= 0) {                
-                m.append(" in line "+(s.left+1));
+                m.append(" in line "+(s.right+1));
                 if (s.right >= 0)
-                    m.append(", column "+(s.right+1));
+                    m.append(", column "+(s.left+1));
             }
         }
         m.append(" : "+message);
@@ -155,8 +155,11 @@ DECLARACIO_INICIAL ::= ROLLB
     | UPDATE0
     | INSERT1
     | SELECT1
+    | BEGEND1
     | error PUNTOYCOMA
-    | error GO;
+    | error GO
+    | GO
+    | /* EPSILON */;
 
 
 
@@ -450,7 +453,8 @@ SAVEP2 ::= IDENTIFICADOR
     | ARROBA IDENTIFICADOR;
 
 
-BEGEND1 ::= BEGIN BEGEND2;
+BEGEND1 ::= BEGIN BEGEND2
+        | BEGINT1 COMF;
 BEGEND2 ::= SELECT1 BEGEND2
         | INSERT1 BEGEND2
         | UPDATE0 BEGEND2
@@ -465,7 +469,6 @@ BEGEND2 ::= SELECT1 BEGEND2
         | END ;
 
 
-BEGINT ::= BEGIN BEGINT1 COMF;
 BEGINT1 ::= TRAN BEGINT2
     | TRANSACTION BEGINT2;
 BEGINT2 ::=  IDENTIFICADOR 
