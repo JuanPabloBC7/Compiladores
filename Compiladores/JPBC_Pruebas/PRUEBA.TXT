@@ -1,7 +1,30 @@
-/* RevisiÃ³n 2 - MMHM: aprobado  */
+/* Revisión 2 - MMHM: aprobado  */
 
-/* asfdasdf */ 
-SELECT * FROM DEPORTES.DBO.PERSONA
+-- ================================================================================================           
+-- Universidad Rafael Landívar           
+-- Autor: Brayan Rodríguez García (19268) - BKRG          
+-- Fecha de creación: 20140725        
+-- Descripción: Obtiene todas las solicitudes de becas según el estatus recibido por parámetro
+-- ================================================================================================
+-- BKRG se toma en cuenta localidad usuario para las sedes a mostrar
+-- BKRG se agrega el no_ayuda por configuración de estatus
+-- BKRG se agrega datos de dirección en el query
+-- BKRG 20150811 r83760 se agrga opción de ver número de solicitud
+-- CSRM Req. 84798 se corrigió ya que estaba halando las solicitudes de la trabajadora social
+--   porque estaba de la sigueinte forma:
+--		AND e.ESTATUS = @L_AI_NO_ESTATUS OR ( @L_AI_NO_ESTATUS = 0 AND e.ESTATUS <> 1 )
+--   se colocaron los paréntesis seguido del and y al finalizar el  paréntesis del or
+-- CSRM req. 82904 - se traen las solicitudes por año
+-- CSRM 20160802 REQ. 93754  y 92555 Se debe reflejar la cuota de estudio de URL ingresada por
+--   est cuando es reingreso y la cuota establecida cuando es primer ingreso. Se deben reflejar
+--   todos los estatus sin omisión.	
+-- CSRM 20170813 REQ.102662 SCC.4599 Se corrigió la forma de obtención del año de la convocatoria,
+--   ahora se obtiene en base al periodo del curso relacionado a la solicitud.
+-- MLFR 20190206 09:42 Se quitan los numerales del order by y se especifica el nombre de la columna 
+-- CMBO 20190403 REQ.115116 SCC.5319 Para la beca URL-KFW III (ß), a los que son extranjeros de
+--  países del trifinio (Salvador, Honduras) se busca el detalle de sus departamentos y municipios
+--  en la tabla de extranjeros.  Para otro extranjero se muestran siempre los de Guatemala.
+-- ================================================================================================
 
 ALTER PROCEDURE dbo.USP_DAEF_GET_SOLICITUDES_POR_ESTATUS
 (
@@ -89,7 +112,7 @@ AS
            P.Telefono_celular,
            /*INICIO CMBO 20190403 REQ.115116 SCC.5319)*/
            CASE
-             WHEN ( s.NO_AYUDA = 'ÃŸ'
+             WHEN ( s.NO_AYUDA = 'ß'
                     AND P.NO_PAIS <> '01') THEN
                COALESCE(( SELECT D.NOMBRE
                           FROM SAF.dbo.DEPARTAMENTO_PAIS AS D
@@ -102,7 +125,7 @@ AS
                     WHERE CAST(D.NO_DEPARTAMENTO AS INT) = P.NO_DEPARTAMENTO)
            END AS DEPARTAMENTO,
            CASE
-             WHEN ( s.NO_AYUDA = 'ÃŸ'
+             WHEN ( s.NO_AYUDA = 'ß'
                     AND P.NO_PAIS <> '01') THEN
                COALESCE(( SELECT M.NOMBRE
                           FROM SAF.dbo.MUNICIPIO_PAIS AS M
@@ -138,11 +161,11 @@ AS
           AND ( s.NO_SOLICITUD = @L_AI_NO_SOLICITUD
                 OR @L_AI_NO_SOLICITUD = 0)
           AND ((/*INICIO CSRM 20170813 REQ.102662 SCC.4599*/
-                 SELECT TOP 1
+                 /*SELECT TOP 1
                                 YEAR(ESA.FEC_TRANSAC)
                         FROM    Becas.dbo.SB_HISTORIAL_ESTATUS_SOLICITUD ESA ( NOLOCK )
                         WHERE   ESA.NO_SOLICITUD = s.NO_SOLICITUD
-                        ORDER BY ESA.FEC_TRANSAC DESC
+                        ORDER BY ESA.FEC_TRANSAC DESC*/
                  SELECT TOP (1)
                         YEAR(cp.FECHA_INICIO)
                  FROM Proyectos.dbo.CL_PERIODO AS cp
@@ -154,6 +177,40 @@ AS
   END;
 GO
 
+-- ================================================================================================         
+-- Universidad Rafael Landívar         
+-- Autor: Brayan Rodríguez García (19268) - BKRG        
+-- Fecha de creación: 20150616      
+-- Descripción: Obtiene todas las solicitudes de becas según el trabajador indicado
+-- ================================================================================================
+-- BKRG se toma en cuenta localidad usuario para las sedes a mostrar
+-- CSROJAS 0909/2015  Req. 84635 Ingreso perCapita se debe traer de datos ingresados por la 
+--   trabajadora social
+-- CSRM REQ 84287 SE AGREGO EL CAMPO REVISADO PARA VERIFICAR SI YA FUE REVISADO POR USUARIO.
+-- CSRM req. 82904 - se traen las solicitudes por año
+-- CSRM 07/10/2015 REQ.84279  SE TRAE CUOTA_ESTUDIANTE 
+-- CSRM 20151116 REQ.85486 SCC.22404: Se agrega la columna de promedio, punteo cou y punteo total
+-- CSRM 20160120 REQ.86535 SCC.3649 no mostrar globito de comentarios si el comentario se guardó como vacío
+-- CSRM 20160705 REQ.93157 se cambio la tabla EACOU_RESULTADO_CANDIDATO por EACOU_RESULTADO_CANDIDATO_grupo
+-- CSRM 10/06/2016 SCC.3979 req.92554 ARREGA EL ORDER BY, FECHA DE VERIFICACIÓN url ( COLUMNA 7)
+-- CSRM 30/08/2016 SCC.4100 req.94121 Dependiendo el parametro(@tipo_reporte) se  ordena por nombre(0)
+--   o por fecha de verificación (1)
+-- MLFR 20161013 1010 Faltaba manejo de transacciones.
+-- CSRM 20170503 REQ.100384 SCC.4423 .POR AMPLIACIÓN DE TIPO DE COMENTARIO SE RESTRINGE 
+--  EXCLUSIVAMENTE A COMENTARIOS DE COMITE. 0 PARA LOS QUE NO HAN SIDO REVISADOS Y 1 PARA LOS REVISADOS.
+-- CSRM 20170721 REQ.103714 SCC.4586 SE CORRIGE LA FORMA EN QUE TRAE EL ULTIMO ESTABLECIMIENTO
+--   YA QUE SI MARCA QUE 2 ESTABLECIMIENTOS FUERON SUS ULTIMOS DA PROBLEMAS, SE COLOCA TOP 1.
+-- CSRM 20170813 REQ.102662 SCC. Se corrigió la forma de obtención del año de la convocatoria, ahora
+--  se obtiene en base al periodo del curso relacionado a la solicitud.
+-- CSRM 20171011 REQ.105666 SCC.4696 Se corrigió la forma en que obtiene el campo Colegio para obtener
+--  siempre el actual. y no ordenado por fec. transac., También se implemento el TRY-CATCH
+-- MMHM 20181206 15:14 REQ.115383 SCC.5237 Se agregó la beca URL-KFW III con el estatus
+--  'En Revisión' (15) cuando se deben obtener con estatus 'Informe TS Validado' (6), que es el
+--   que se usa en la opción Revisión de Solicitud de Becas.
+-- CMBO 20190403 REQ.115116 SCC.5319 Para la beca URL-KFW III (ß), a los que son extranjeros de
+--  países del trifinio (Salvador, Honduras) se busca el detalle de sus departamentos y municipios
+--  en la tabla de extranjeros.  Para otro extranjero se muestran siempre los de Guatemala.
+-- ================================================================================================
 
 ALTER PROCEDURE dbo.USP_DAEF_GET_SOLICITUDES_POR_TRABAJADOR_ASIGNADO
 (
@@ -431,7 +488,7 @@ AS
              P.Telefono_Celular,
              /*INICIO CMBO 20190403 REQ.115116 SCC.5319)*/
              CASE
-               WHEN ( s.NO_AYUDA = 'ÃŸ'
+               WHEN ( s.NO_AYUDA = 'ß'
                       AND P.No_Pais <> '01') THEN
                  COALESCE(( SELECT D.NOMBRE
                             FROM SAF.dbo.DEPARTAMENTO_PAIS AS D
@@ -444,7 +501,7 @@ AS
                       WHERE CAST(D.NO_DEPARTAMENTO AS INT) = P.NO_DEPARTAMENTO)
              END AS DEPARTAMENTO,
              CASE
-               WHEN ( s.NO_AYUDA = 'ÃŸ'
+               WHEN ( s.NO_AYUDA = 'ß'
                       AND P.No_Pais <> '01') THEN
                  COALESCE(( SELECT M.NOMBRE
                             FROM SAF.dbo.MUNICIPIO_PAIS AS M
@@ -464,13 +521,13 @@ AS
              P.Correo_Electronico,
              ( SELECT TOP 1
                       ESA.FEC_TRANSAC
-               FROM Becas.dbo.SB_HISTORIAL_ESTATUS_SOLICITUD AS ESA WITH (NOLOCK) --ASIGNÃ“
+               FROM Becas.dbo.SB_HISTORIAL_ESTATUS_SOLICITUD AS ESA WITH (NOLOCK) --ASIGNÓ
                WHERE ESA.ESTATUS_NUEVO = 4
                      AND ESA.NO_SOLICITUD = s.NO_SOLICITUD
                ORDER BY ESA.FEC_TRANSAC DESC) AS FECHA_ASIGNACION,
              ( SELECT TOP 1
                       ESA.USUARIO
-               FROM Becas.dbo.SB_HISTORIAL_ESTATUS_SOLICITUD AS ESA WITH (NOLOCK) --ASIGNÃ“
+               FROM Becas.dbo.SB_HISTORIAL_ESTATUS_SOLICITUD AS ESA WITH (NOLOCK) --ASIGNÓ
                WHERE ESA.ESTATUS_NUEVO = 4
                      AND ESA.NO_SOLICITUD = s.NO_SOLICITUD
                ORDER BY ESA.FEC_TRANSAC DESC) AS USUARIO_ASIGNA,
@@ -478,7 +535,7 @@ AS
              RTRIM(tar.Descripcion) + ' ' + CAST(s.PORCENTAJE_CUOTA_RECOMENDADO AS VARCHAR(3)) AS AYUDA_RECOMENDADA,
              ( SELECT TOP 1
                       ESA.FEC_TRANSAC
-               FROM Becas.dbo.SB_HISTORIAL_ESTATUS_SOLICITUD AS ESA WITH (NOLOCK) --ASIGNÃ“
+               FROM Becas.dbo.SB_HISTORIAL_ESTATUS_SOLICITUD AS ESA WITH (NOLOCK) --ASIGNÓ
                WHERE ESA.ESTATUS_NUEVO = 3
                      AND ESA.NO_SOLICITUD = s.NO_SOLICITUD
                ORDER BY ESA.FEC_TRANSAC DESC) AS FECHA_VERIFICA_INFORME,
@@ -502,23 +559,23 @@ AS
              s.NO_AYUDA,
              (
 
-               /*INICIO CSRM 20171011 REQ.105666 SCC.4696 Se corrigiÃ³ la forma en que obtiene el campo Colegio*/
-               SELECT TOP 1
+               /*INICIO CSRM 20171011 REQ.105666 SCC.4696 Se corrigió la forma en que obtiene el campo Colegio*/
+               /*   SELECT TOP 1
                    HS.ESTABLECIMIENTO
                FROM Becas.dbo.SB_HISTORIAL_ESTUDIO HS (NOLOCK)
                WHERE HS.NO_SOLICITUD = s.NO_SOLICITUD
                ORDER BY Fecha_Fin DESC
-			   
+			   */
                SELECT TOP 1
                       HES.ESTABLECIMIENTO
                FROM Becas.dbo.SB_HISTORIAL_ESTUDIO AS HES WITH (NOLOCK)
                WHERE HES.NO_SOLICITUD = s.NO_SOLICITUD
                      AND HES.ESTABLECIMIENTO_ACTUAL = 1
-             /*FIN CSRM 20171011 REQ.105666 SCC.4696 Se corrigiÃ³ la forma en que obtiene el campo Colegio*/
+             /*FIN CSRM 20171011 REQ.105666 SCC.4696 Se corrigió la forma en que obtiene el campo Colegio*/
              ) AS COLEGIO,
              dac.CUOTA_ESTUDIANTE AS CUOTA_COLEGIO,
              (CASE
-                WHEN CE.Monto IS NULL THEN 'Cuota Carrera No EspecÃ­fica'
+                WHEN CE.Monto IS NULL THEN 'Cuota Carrera No Específica'
                 ELSE CAST(CAST((dac.CUOTA_ESTUDIO / CE.Monto * 100) AS DECIMAL(5, 2)) AS VARCHAR(10))
               END) AS RELACION_CUOTA_URL,
              CASE s.ESTATUS
@@ -608,7 +665,7 @@ AS
                                AND @L_AI_ESTATUS = 14)
                              OR ( s.NO_AYUDA = '3'
                                   AND @L_AI_ESTATUS = 6)
-                             OR ( s.NO_AYUDA = 'ÃŸ'
+                             OR ( s.NO_AYUDA = 'ß'
                                   AND @L_AI_ESTATUS = 6) /*MMHM 20181206 15:14 REQ.115383 SCC.5237*/
                              OR ( s.NO_AYUDA = 'Y'
                                   AND @L_AI_ESTATUS = 16))))
@@ -631,11 +688,11 @@ AS
                               WHERE CAST(U.NO_PROVEEDOR AS VARCHAR(20)) = @L_asUsuario))
             AND ((
                    /*INICIO CSRM 20170813 REQ.102662*/
-                  SELECT TOP 1
+                   /*SELECT TOP 1
                                 YEAR(ESA.FEC_TRANSAC)
                         FROM    Becas.dbo.SB_HISTORIAL_ESTATUS_SOLICITUD ESA ( NOLOCK )
                         WHERE   ESA.NO_SOLICITUD = s.NO_SOLICITUD
-                        ORDER BY ESA.FEC_TRANSAC DESC
+                        ORDER BY ESA.FEC_TRANSAC DESC*/
                    SELECT TOP 1
                           YEAR(cp.FECHA_INICIO)
                    FROM Proyectos.dbo.CL_PERIODO AS cp
